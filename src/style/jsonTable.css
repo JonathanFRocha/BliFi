@@ -1,0 +1,31 @@
+.types__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.types__button {
+  animation: showIn 0.4s linear;
+  margin: 5px;
+  background-color: #fcfcd4;
+  border: 1px solid #fcfcd4;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1em;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 15px 30px;
+  transition: all 0.2s;
+}
+
+.types__button:hover {
+  transform: translateY(-3px);
+}
+
+@keyframes showIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

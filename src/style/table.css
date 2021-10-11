@@ -1,0 +1,75 @@
+.modal__table__container {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.table__container {
+  margin: 0 5% 20px;
+}
+
+.modal__table__title {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.table__elements__container {
+  display: flex;
+  width: 120px;
+}
+
+.table__elements__container p {
+  margin: 0;
+  text-align: center;
+  width: 60px;
+  background-color: white;
+}
+
+.table__elements__container h3 {
+  margin: 0 5px;
+  text-align: center;
+  width: 60px;
+  text-decoration: underline;
+}
+
+.table__elements__success__border {
+  border: 1px solid #2cc3d5;
+}
+
+.table__elements__fail__border {
+  border: 1px solid #ff4c4c;
+}
+
+.table__texts__title {
+  text-align: center;
+}
+.table__texts__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.table__texts__element__container,
+.table__texts__subtitle__container {
+  display: flex;
+}
+
+.table__texts__subtitle__container h3 {
+  width: 50%;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.table__texts__element__container {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+}
+
+.table__texts__element__container p {
+  width: 50%;
+  margin: 0;
+}
+
+.table__texts__wrong__char {
+  background-color: yellow;
+}

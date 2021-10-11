@@ -1,0 +1,31 @@
+.figma__insert__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.words__container {
+  margin-top: 1px;
+  max-width: 300px;
+  border: 1px solid #cbd6e2;
+  border-radius: 5px;
+  padding: 1.5px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.words__inserted__container {
+  background-color: #3f7de8;
+  color: white;
+  margin: 2px;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.words__inserted {
+  font-size: 0.8em;
+}
+
+.words__remove {
+  cursor: pointer;
+}

@@ -1,0 +1,98 @@
+.comparer__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: showIn 0.2s linear;
+}
+
+.comparer__modal__card {
+  background-color: #f5f5f5;
+  width: 90vw;
+  max-height: 90vh;
+  position: relative;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.comparer__modal__close {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  transition: transform 0.5s;
+}
+
+.comparer__modal__close:hover {
+  transform: scale(1.08);
+}
+
+.comparer__modal__close img {
+  width: 30px;
+}
+
+.modal__types__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.modal__types__button {
+  margin: 5px;
+  color: #fff;
+  background-color: #3f7de8;
+  border: none;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 15px 30px;
+  transition: background-color 0.2s;
+}
+
+.modal__types__button:hover {
+  background-color: #125ad5;
+}
+
+.modal__searchType__container {
+  margin-top: 15px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__searchType__inputs {
+  margin-top: 5px;
+  display: flex;
+}
+
+.modal__searchType__inputs div {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__searchType__radio {
+  display: flex;
+}
+
+@keyframes showIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
