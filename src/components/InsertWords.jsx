@@ -24,7 +24,7 @@ const InsertWords = ({ value, setValue, labelContent, id }) => {
     return value.map((word, i) => {
       return (
         <div className="words__inserted__container">
-          <span className="words__inserted" key={i}>
+          <span className="words__inserted" key={i + word}>
             {word}
           </span>
           <span
@@ -41,7 +41,7 @@ const InsertWords = ({ value, setValue, labelContent, id }) => {
   return (
     <div className={`input__container ${document ? "" : "showNone"}`}>
       <input
-        className="page__input"
+        className="page__input-full"
         onKeyPress={insertNewComponentName}
         id={id}
         name={id}

@@ -5,13 +5,29 @@ const UseFigmaJson = () => {
   const { setFigmaElements, document, components, excludingWords } = useContext(
     JsonComparerContext
   );
+  const ignoreBold = true;
+  const transformBoldChar = ignoreBold ? "" : "*";
+  const boldRegex = ignoreBold ? /(<b>|<\/b>|\*)/gm : /(<b>|<\/b>)/gm;
+  const removeUnusedCharsRegex = /(\n|\r|• ?)/gm;
 
   const componentName = components.length
     ? components
-    : ["texto enviado", "message", "Texto enviado", "Message"];
-  const excludeStringList = excludingWords.length
-    ? excludingWords
-    : ["mensagem"];
+    : ["texto enviado", "message", "enviar minha localiz", "opção 2"];
+  const excludeStringList = [
+    ...excludingWords,
+    "mensagem",
+    "input",
+    "input inesperado",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "input inicial",
+    "input do usuario",
+    "input inesperado do usuario",
+  ];
   const checkFillsForOpacity = (component) => {
     const fills = component.fills;
     if (!fills || fills.length === 0) return true;
@@ -22,9 +38,18 @@ const UseFigmaJson = () => {
     return isUsed;
   };
 
+  const formatString = (string) => {
+    const formattedStr = string
+      .trim()
+      .split(" ")
+      .filter((str) => str !== "")
+      .join(" ");
+    return formattedStr;
+  };
+
   const getAllIdsAndTextsFromFigma = (component, ids = [], texts = []) => {
     // REGEX para buscar ids
-    const idRe = /^[a-zA-Z](.\d){3}/;
+    const idRe = /^[a-z]{1,2}(.\d){2,}/i;
     const isId = idRe.test(component.characters);
     // ***
     const fillHasOpacity = checkFillsForOpacity(component);
@@ -33,17 +58,27 @@ const UseFigmaJson = () => {
       (!component.opacity || component.opacity > 0.5) && fillHasOpacity;
     // **
     if (component.characters !== undefined && isId && isUsed) {
-      ids.push(component.characters.substr(0, 7));
+      const foundId = component.characters.match(idRe)[0].toUpperCase();
+      if (!ids.includes(foundId)) {
+        ids.push(foundId);
+      }
     }
+
     if (
-      componentName.includes(component.name.toLowerCase()) &&
-      !excludeStringList.includes(component.characters.toLowerCase()) &&
+      componentName.includes(formatString(component.name).toLowerCase()) &&
+      !excludeStringList.includes(
+        formatString(component.characters).toLowerCase()
+      ) &&
       isUsed
     ) {
       // Recupera os textos dos componentes que tem como nom o "texto enviado" no JSON
-      const untreatedText = component.characters;
-      const formattedText = untreatedText.replace(/(•)/gm, "");
-      const treatedText = formattedText.replace(/(\n|\r)/gm, "");
+      const treatedComponentCharacters = formatString(component.characters);
+
+      const boldFormatedTex = treatedComponentCharacters.replace(
+        boldRegex,
+        transformBoldChar
+      );
+      const treatedText = boldFormatedTex.replace(removeUnusedCharsRegex, "");
       texts.push(treatedText);
     }
     // se não existir mais childrens, retorna

@@ -1,0 +1,41 @@
+.input__container__button-projects {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.input__button-projects {
+  background-color: #4273d8;
+  color: white;
+  border: none;
+  font-size: 1.05em;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s background-color;
+}
+
+.input__button-projects:hover {
+  background-color: #2859d2;
+}
+
+.input__container__select-projects {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  margin: auto;
+}
+
+.input__container__select-label {
+  color: black;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.input__select-projects {
+  height: 1.9em;
+  background-color: white;
+  border: 1px solid #cbd6e2;
+  border-radius: 5px;
+}

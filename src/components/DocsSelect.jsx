@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import JsonComparerContext from "../context/Context";
+import "../style/fileDoc.css";
 
 const DocsSelect = () => {
   const { documents, setDocument } = useContext(JsonComparerContext);
@@ -19,11 +20,23 @@ const DocsSelect = () => {
   };
 
   return (
-    <div className={documents.length ? "" : "showNone"}>
-      <select onChange={({ target: { value } }) => setContextDoc(value)}>
-        <option value="">Select One</option>
-        {renderOptions()}
-      </select>
+    <div
+      className={`input__select__container ${
+        documents.length ? "" : "showNone"
+      }`}
+    >
+      <div>
+        <label className="input__select-label" htmlFor="selectProject">
+          Select a document
+        </label>
+        <select
+          className="input__select"
+          onChange={({ target: { value } }) => setContextDoc(value)}
+        >
+          <option value="">Select One</option>
+          {renderOptions()}
+        </select>
+      </div>
     </div>
   );
 };

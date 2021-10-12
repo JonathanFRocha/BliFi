@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { getFigmaData, getFigmaFiles } from "../services/figmaApi";
 import JsonComparerContext from "../context/Context";
-
+import "../style/projectsSelect.css";
 const ProjectsSelect = () => {
   const {
     setProjects,
@@ -40,16 +40,32 @@ const ProjectsSelect = () => {
 
   return (
     <>
-      <div>
+      <div className="input__container__button-projects">
         <button
-          className={projects.length ? "showNone" : ""}
+          className={`input__button-projects ${
+            projects.length ? "showNone" : ""
+          }`}
           onClick={getProjects}
         >
-          Get Data
+          Get My Team Projects
         </button>
       </div>
-      <div className={projects.length ? "" : "showNone"}>
-        <select onChange={({ target: { value } }) => setContextProject(value)}>
+      <div
+        className={`input__container__select-projects ${
+          projects.length ? "" : "showNone"
+        }`}
+      >
+        <label
+          className="input__container__select-label"
+          htmlFor="selectProject"
+        >
+          Select a project
+        </label>
+        <select
+          id="selectProject"
+          className="input__select-projects"
+          onChange={({ target: { value } }) => setContextProject(value)}
+        >
           <option value="">Select One</option>
           {renderOptions()}
         </select>

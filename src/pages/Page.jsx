@@ -8,6 +8,7 @@ import { UseCompareElements, UseBlipJson, UseFigmaJson } from "../hooks";
 import "../style/page.css";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../components/Loading";
+import BliFi from "../assets/BliFi.png";
 
 const Page = () => {
   const [error, setError] = useState("");
@@ -71,25 +72,33 @@ const Page = () => {
   return (
     <div>
       <Loading />
-      <div>
-        <h1 className="title__top">Figma - Blip</h1>
-        <h1 className="title__bottom">Validator</h1>
+      <div className="header__container">
+        <div>
+          <h1 className="title__top">BliFi</h1>
+          <h1 className="title__bottom">Comparing Blip And Figma</h1>
+        </div>
+        <img src={BliFi} alt="" />
       </div>
       <div className="inputs__container">
         <FigmaInputs />
-        <BlipInputs />
+        <div>
+          <BlipInputs />
+          <div className="button__container">
+            <button
+              disabled={disabledButton}
+              className={`${document ? "" : "showNone"} ${
+                disabledButton ? "page__button--disabled" : "page__button"
+              }`}
+              type="button"
+              onClick={compare}
+            >
+              Compare
+            </button>
+            <ToastContainer />
+          </div>
+        </div>
       </div>
-      <div className="button__container">
-        <button
-          disabled={disabledButton}
-          className={disabledButton ? "page__button--disabled" : "page__button"}
-          type="button"
-          onClick={compare}
-        >
-          Compare
-        </button>
-        <ToastContainer />
-      </div>
+
       <JsonTable />
     </div>
   );

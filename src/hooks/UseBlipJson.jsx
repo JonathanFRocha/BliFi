@@ -4,28 +4,95 @@ import JsonComparerContext from "../context/Context";
 
 const UseBlipJson = () => {
   const { setBlipElements, botKey } = useContext(JsonComparerContext);
-  const findTextContent = (block) => {
-    const contents = block["$contentActions"];
-    const blipMessages = contents
-      .map((content) => {
-        const action = content.action;
-        const isText =
-          action &&
-          content.action["$cardContent"].document.type === "text/plain";
-        if (action && isText) {
-          const untreatedText = action["$cardContent"].document.content;
-          const formattedText = untreatedText.replace(/(• ?)/gm, "");
-          const treatedText = formattedText.replace(/(\n|\r)/gm, "");
-          return treatedText;
+  const ignoreBold = true;
+  const transformBoldChar = ignoreBold ? "" : "*";
+  const boldRegex = ignoreBold ? /(<b>|<\/b>|\*)/gm : /(<b>|<\/b>)/gm;
+  const removeUnusedCharsRegex = /(\n|\r|• ?)/gm;
+  const blipTypes = [
+    "text/plain",
+    "application/vnd.lime.select+json",
+    "application/vnd.lime.media-link+json",
+    "application/vnd.lime.document-select+json",
+  ];
+
+  const formatString = (strings) => {
+    return strings.map((string) =>
+      string
+        .replace(boldRegex, transformBoldChar)
+        .replace(removeUnusedCharsRegex, "")
+        .trim()
+        .split(" ")
+        .filter((str) => str !== "")
+        .join(" ")
+    );
+  };
+
+  const getTextFromCarroussel = (listOfItems) => {
+    const texts = [];
+    listOfItems.forEach((item) => {
+      const contents = item.header.value;
+      if (contents.title) texts.push(contents.title);
+      if (contents.text) texts.push(contents.text);
+    });
+    return texts;
+  };
+
+  const getTextFromDoc = (doc, type) => {
+    const listText = [];
+    switch (type) {
+      case blipTypes[0]:
+        listText.push(doc.content);
+        break;
+      case blipTypes[1]:
+        listText.push(doc.content.text);
+        doc.content.options.forEach((opt) => listText.push(opt.text));
+        break;
+      case blipTypes[2]:
+        if (doc.content.title) {
+          listText.push(doc.content.title);
         }
-        return undefined;
-      })
-      .filter((text) => text !== undefined);
+        if (doc.content.text) {
+          listText.push(doc.content.text);
+        }
+        break;
+      case blipTypes[3]:
+        const texts = getTextFromCarroussel(doc.content.items);
+        listText.push(...texts);
+        break;
+      default:
+        break;
+    }
+    return listText;
+  };
+
+  const findTextContent = (block) => {
+    const blipMessages = [];
+    const contents = block["$contentActions"];
+    contents.forEach((content) => {
+      const action = content.action;
+      const hasRightType = action
+        ? blipTypes.includes(
+            content.action["$cardContent"].document.content.itemType
+          ) || blipTypes.includes(content.action["$cardContent"].document.type)
+        : false;
+      const isText = action && hasRightType;
+      if (isText) {
+        const type =
+          content.action["$cardContent"].document.content.itemType ||
+          content.action["$cardContent"].document.type;
+        const foundTexts = getTextFromDoc(
+          action["$cardContent"].document,
+          type
+        );
+
+        blipMessages.push(...formatString(foundTexts));
+      }
+    });
     return blipMessages;
   };
 
   const getAllIdsFromBots = (jsonBot) => {
-    const idRe = /^\[[a-zA-Z](.\d){3}\]/;
+    const idRe = /[a-z]{1,2}(.\d){2,}/i;
     const keys = Object.keys(jsonBot);
 
     const textContents = [];
@@ -34,15 +101,15 @@ const UseBlipJson = () => {
       const foundTextContent = findTextContent(block);
       if (foundTextContent) textContents.push(...foundTextContent);
     });
-
-    const ids = keys
-      .map((key) => {
-        if (idRe.test(jsonBot[key]["$title"])) {
-          return jsonBot[key]["$title"].substr(1, 7);
+    const ids = [];
+    keys.forEach((key) => {
+      if (idRe.test(jsonBot[key]["$title"])) {
+        const foundId = jsonBot[key]["$title"].match(idRe)[0].toUpperCase();
+        if (!ids.includes(foundId)) {
+          ids.push(foundId);
         }
-        return undefined;
-      })
-      .filter((el) => el !== undefined);
+      }
+    });
     return { ids, texts: textContents };
   };
 

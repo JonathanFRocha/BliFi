@@ -15,20 +15,20 @@
 
 .table__elements__container {
   display: flex;
-  width: 120px;
+  width: 180px;
 }
 
 .table__elements__container p {
   margin: 0;
   text-align: center;
-  width: 60px;
+  width: 90px;
   background-color: white;
 }
 
 .table__elements__container h3 {
   margin: 0 5px;
   text-align: center;
-  width: 60px;
+  width: 90px;
   text-decoration: underline;
 }
 
