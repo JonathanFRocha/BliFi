@@ -11,11 +11,13 @@ const FilesSelect = () => {
 
   const setContextFile = async (fileKey) => {
     try {
-      setFile(fileKey);
-      setLoading(true);
-      const docs = await getFigmaDocs(fileKey, token);
-      await setDocuments(docs);
-      setLoading(false);
+      if(fileKey){
+        setFile(fileKey);
+        setLoading(true);
+        const docs = await getFigmaDocs(fileKey, token);
+        await setDocuments(docs);
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       toast.error(error.message, { autoClose: 4000 });

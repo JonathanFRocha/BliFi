@@ -28,11 +28,13 @@ const ProjectsSelect = () => {
 
   const setContextProject = async (projectId) => {
     try {
-      setProject(projectId);
-      setLoading(true);
-      const files = await getFigmaFiles(projectId, token);
-      setFiles(files);
-      setLoading(false);
+      if(projectId){
+        setProject(projectId);
+        setLoading(true);
+        const files = await getFigmaFiles(projectId, token);
+        setFiles(files);
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       toast.error(error.message, { autoClose: 4000 });

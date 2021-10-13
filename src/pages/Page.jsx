@@ -75,7 +75,7 @@ const Page = () => {
       <div className="header__container">
         <div>
           <h1 className="title__top">BliFi</h1>
-          <h1 className="title__bottom">Comparing Blip And Figma</h1>
+          <h1 className="title__bottom">Comparing Blip and Figma</h1>
         </div>
         <img src={BliFi} alt="" />
       </div>
