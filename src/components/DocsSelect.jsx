@@ -1,9 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import JsonComparerContext from "../context/Context";
 import "../style/fileDoc.css";
 
 const DocsSelect = () => {
-  const { documents, setDocument } = useContext(JsonComparerContext);
+  const { documents, setDocuments, setDocument, project } = useContext(
+    JsonComparerContext
+  );
+
+  useEffect(() => {
+    setDocument();
+    setDocuments([]);
+  }, [project, setDocuments, setDocument]);
+
   const setContextDoc = (name) => {
     const document = documents.filter((document) => document.name === name)[0];
     setDocument(document);

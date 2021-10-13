@@ -28,11 +28,12 @@ const IdTable = ({ visualization }) => {
     for (let i = 0; i <= elements.length; i += ELEMENTS_TABLE) {
       elementsAgreggation.push(elements.slice(i, i + ELEMENTS_TABLE));
     }
-
-    const tableElements = elementsAgreggation.map((agregg, index) => {
+    let i = 0;
+    const tableElements = elementsAgreggation.map((agregg) => {
+      i++;
       return (
-        <div className="table__container">
-          <div className="table__elements__container" key={index}>
+        <div key={i} className="table__container">
+          <div className="table__elements__container">
             <h3>Figma</h3>
             <h3>Blip</h3>
           </div>
@@ -40,11 +41,9 @@ const IdTable = ({ visualization }) => {
             const grayBg = indexI % 2 === 0 ? "table__grayBG" : "";
             const success = "table__elements__success__border";
             const fail = "table__elements__fail__border";
+            i++;
             return (
-              <div
-                className={`table__elements__container ${grayBg}`}
-                key={indexI}
-              >
+              <div className={`table__elements__container ${grayBg}`} key={i}>
                 <p className={isEqual ? success : fail}>{figma}</p>
                 <p className={isEqual ? success : fail}>{blip}</p>
               </div>

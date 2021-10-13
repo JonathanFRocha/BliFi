@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import JsonComparerContext from "../context/Context";
 import "../style/blipInputs.css";
 import blipLogo from "../assets/bliplogo.png";
+import CONSTANTS from "../constants/constants";
+
 const BlipInputs = () => {
   const { botKey, setBotKey, document } = useContext(JsonComparerContext);
   return (
@@ -20,7 +22,11 @@ const BlipInputs = () => {
           type="text"
           placeholder="."
         />
-        <label className="input__label" htmlFor="botKey">
+        <label
+          data-tip={CONSTANTS.TOKEN_BLIP_INFO}
+          className="input__label"
+          htmlFor="botKey"
+        >
           Bot Key
         </label>
       </div>

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { toast } from "react-toastify";
 import { getFigmaData, getFigmaFiles } from "../services/figmaApi";
 import JsonComparerContext from "../context/Context";
 import "../style/projectsSelect.css";
@@ -14,18 +15,28 @@ const ProjectsSelect = () => {
   } = useContext(JsonComparerContext);
 
   const getProjects = async () => {
-    setLoading(true);
-    const projects = await getFigmaData(team, token);
-    setProjects(projects);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const projects = await getFigmaData(team, token);
+      setProjects(projects);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message, { autoClose: 4000 });
+    }
   };
 
   const setContextProject = async (projectId) => {
-    setProject(projectId);
-    setLoading(true);
-    const files = await getFigmaFiles(projectId, token);
-    setFiles(files);
-    setLoading(false);
+    try {
+      setProject(projectId);
+      setLoading(true);
+      const files = await getFigmaFiles(projectId, token);
+      setFiles(files);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message, { autoClose: 4000 });
+    }
   };
 
   const renderOptions = () => {

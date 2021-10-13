@@ -7,6 +7,7 @@ import DocsSelect from "./DocsSelect";
 import FilesSelect from "./FilesSelect";
 import InsertWords from "./InsertWords";
 import ProjectsSelect from "./ProjectsSelect";
+import ReactTooltip from "react-tooltip";
 
 const FigmaInputs = () => {
   const {
@@ -22,7 +23,7 @@ const FigmaInputs = () => {
 
   return (
     <div className="input__card">
-      <div class="input__card__title__container">
+      <div className="input__card__title__container">
         <h2 className="input__title">Figma</h2>
         <img className="input__image" src={figmaLogo} alt="figma logo" />
       </div>
@@ -37,7 +38,11 @@ const FigmaInputs = () => {
             type="text"
             placeholder="."
           />
-          <label className="input__label" htmlFor="key">
+          <label
+            data-tip={CONSTANTS.TOKEN_FIGMA_INFO}
+            className="input__label"
+            htmlFor="key"
+          >
             Access key
           </label>
         </div>
@@ -51,7 +56,11 @@ const FigmaInputs = () => {
             type="text"
             placeholder="."
           />
-          <label className="input__label" htmlFor="file">
+          <label
+            data-tip={CONSTANTS.TEAM_FIGMA_INFO}
+            className="input__label"
+            htmlFor="file"
+          >
             Team
           </label>
         </div>
@@ -66,13 +75,16 @@ const FigmaInputs = () => {
         setValue={setComponents}
         labelContent={CONSTANTS.FIGMA_INSERT_COMPONENT}
         id={CONSTANTS.ID_COMPONENT}
+        info={CONSTANTS.COMPONENTS_FIGMA_INFO}
       />
       <InsertWords
         value={excludingWords}
         setValue={setExcludingWords}
         labelContent={CONSTANTS.FIGMA_EXCLUDE_TEXT}
         id={CONSTANTS.ID_EXCLUDE_TEXT}
+        info={CONSTANTS.EXCLUDE_TEXT_FIGMA_INFO}
       />
+      <ReactTooltip multiline={true} backgroundColor={"#3f7de8"} />
     </div>
   );
 };

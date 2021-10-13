@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import JsonComparerContext from "../context/Context";
+
 import "../style/insertWords.css";
-const InsertWords = ({ value, setValue, labelContent, id }) => {
+const InsertWords = ({ value, setValue, labelContent, id, info }) => {
   const { document } = useContext(JsonComparerContext);
   const insertNewComponentName = (event) => {
     if (event.key === "Enter") {
@@ -48,7 +49,7 @@ const InsertWords = ({ value, setValue, labelContent, id }) => {
         type="text"
         placeholder="."
       />
-      <label className="input__label" htmlFor={id}>
+      <label data-tip={info} className="input__label" htmlFor={id}>
         {labelContent}
       </label>
       <div className={value.length ? "words__container" : ""}>

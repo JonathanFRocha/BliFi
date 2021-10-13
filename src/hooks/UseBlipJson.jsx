@@ -116,7 +116,7 @@ const UseBlipJson = () => {
   const getBotJson = async () => {
     const Header = new Headers({
       "Content-Type": "application/json",
-      Authorization: `Key ${botKey}`,
+      Authorization: `${botKey}`,
     });
     const myBody = {
       id: "{{$guid}}",

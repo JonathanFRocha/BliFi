@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { toast } from "react-toastify";
 import JsonComparerContext from "../context/Context";
 import { getFigmaDocs } from "../services/figmaApi";
 import "../style/fileDoc.css";
@@ -9,11 +10,16 @@ const FilesSelect = () => {
   );
 
   const setContextFile = async (fileKey) => {
-    setFile(fileKey);
-    setLoading(true);
-    const docs = await getFigmaDocs(fileKey, token);
-    await setDocuments(docs);
-    setLoading(false);
+    try {
+      setFile(fileKey);
+      setLoading(true);
+      const docs = await getFigmaDocs(fileKey, token);
+      await setDocuments(docs);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message, { autoClose: 4000 });
+    }
   };
 
   const renderOptions = () => {
